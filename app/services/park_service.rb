@@ -3,10 +3,9 @@ class ParkService
     require "pry"; binding.pry
     response = get_json(city, state)
     if response.status == 200
-      parsed = JSON.parse(response.body, symbolize_names: true)[:data]
-      
+      JSON.parse(response.body, symbolize_names: true)[:data].first
     end
-    # parsed[:hits][1]
+    # add else for bad request
   end
 
   private
