@@ -12,12 +12,10 @@ RSpec.describe 'Get Park by Search Endpoint' do
 
     expect(data).to have_key(:name)
     expect(data).to have_key(:description)
-    expect(data).to have_key(:activites)
     expect(data).to have_key(:directions)
 
     expect(data[:name]).to_not be_empty
     expect(data[:description]).to_not be_empty
-    expect(data[:activites]).to_not be_empty
     expect(data[:directions]).to_not be_empty
   end
   # parks search will create a search record
