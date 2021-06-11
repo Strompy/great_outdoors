@@ -1,6 +1,5 @@
 class ParkService
   def self.get_park(city, state)
-    require "pry"; binding.pry
     response = get_json(city, state)
     if response.status == 200
       JSON.parse(response.body, symbolize_names: true)[:data].first
