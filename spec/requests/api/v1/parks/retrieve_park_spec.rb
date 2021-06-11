@@ -8,7 +8,7 @@ RSpec.describe 'Get Park by Search Endpoint' do
     expect(response).to be_successful
     expect(response.content_type).to eq('application/json')
 
-    data = JSON.parse(response.body, symbolize_names: true)
+    data = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
 
     expect(data).to have_key(:name)
     expect(data).to have_key(:description)

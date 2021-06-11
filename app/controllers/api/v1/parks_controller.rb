@@ -1,8 +1,7 @@
 class Api::V1::ParksController < ApplicationController
   def index
     park = ParkFacade.by_location(search_params[:location])
-    require "pry"; binding.pry
-    # render json: ParkSerializer.new(park).serialize_json
+    render json: ParkSerializer.new(park).serialized_json
   end
 
   private
