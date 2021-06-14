@@ -17,6 +17,8 @@ RSpec.describe 'Get Park by Search Endpoint' do
     expect(data[:name]).to_not be_empty
     expect(data[:description]).to_not be_empty
     expect(data[:directions]).to_not be_empty
+
+    expect(Park.count).to eq(1)
   end
   it 'creates a new search record when searching for a new location' do
     location = 'denver,co'
@@ -28,9 +30,21 @@ RSpec.describe 'Get Park by Search Endpoint' do
     expect(Search.count).to eq(1)
     search = Search.last
     expect(search.location).to eq(location)
-    expect(search.park_result).to_not be_nil
+    expect(search.parks).to_not be_empty
   end
-  # parks search will create a search record
+  it 'uses the previous search for a non-unique location' do
+    location = 'denver,co'
+    get "/api/v1/parks?location=#{location}"
+
+    expect(response).to be_successful
+    expect(Search.count).to eq(1)
+    expect(Park.count).to eq(1)
+
+    get "/api/v1/parks?location=#{location}"
+
+    expect(Search.count).to eq(1)
+    expect(Park.count).to eq(1)
+  end
   # parks endpoint returns all previous searches
   # parks/:id returns individual previous search
 end
