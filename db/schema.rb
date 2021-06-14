@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_11_183353) do
+ActiveRecord::Schema.define(version: 2021_06_14_225221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "park_searches", force: :cascade do |t|
+    t.bigint "park_id"
+    t.bigint "search_id"
+    t.index ["park_id"], name: "index_park_searches_on_park_id"
+    t.index ["search_id"], name: "index_park_searches_on_search_id"
+  end
 
   create_table "parks", force: :cascade do |t|
     t.string "name"
@@ -23,4 +30,12 @@ ActiveRecord::Schema.define(version: 2021_06_11_183353) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "searches", force: :cascade do |t|
+    t.string "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "park_searches", "parks"
+  add_foreign_key "park_searches", "searches"
 end
