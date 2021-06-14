@@ -6,6 +6,10 @@ RSpec.describe Park, type: :model do
     it { should validate_presence_of :description }
     it { should validate_presence_of :directions }
   end
+  describe 'relationships' do
+    it { should have_many :park_searches }
+    it { should have_many(:searches).through(:park_searches) }
+  end
 end
 
 # park_data = {:id=>"67A56B17-F533-4A56-B2DA-26091C6AD295",
