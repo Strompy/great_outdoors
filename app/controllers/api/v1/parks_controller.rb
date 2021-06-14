@@ -1,6 +1,6 @@
 class Api::V1::ParksController < ApplicationController
   def index
-    location = search_params[:location]
+    location = search_params[:location].downcase.squish
     search = Search.find_by(location: location)
     if search
       park = search.parks.first
