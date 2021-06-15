@@ -6,6 +6,7 @@ class Api::V1::ParksController < ApplicationController
       park = search.parks.first
     else
       park = ParkFacade.by_location(location)
+      # ForecastFacade.by_park
       park.searches << Search.create(location: location)
     end
     render json: ParkSerializer.new(park).serialized_json

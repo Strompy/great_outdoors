@@ -45,6 +45,23 @@ RSpec.describe 'Get Park by Search Endpoint' do
     expect(Search.count).to eq(1)
     expect(Park.count).to eq(1)
   end
+  xit 'returns a forecast for the park' do
+    location = 'denver,co'
+
+    get "/api/v1/parks?location=#{location}"
+
+    expect(response).to be_successful
+    expect(response.content_type).to eq('application/json')
+
+    data = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
+    expect(data).to have_key(:forecast)
+    expect(data[:forecast]).to have_key(:current)
+    expect(data[:forecast]).to have_key(:high)
+    expect(data[:forecast]).to have_key(:low)
+    expect(data[:forecast][:current]).to_not be_empty
+    expect(data[:forecast][:high]).to_not be_empty
+    expect(data[:forecast][:low]).to_not be_empty
+  end
   # parks endpoint returns all previous searches
   # parks/:id returns individual previous search
 end
