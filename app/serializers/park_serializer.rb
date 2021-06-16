@@ -1,5 +1,5 @@
 class ParkSerializer
   include FastJsonapi::ObjectSerializer
-  set_type :forecast
-  attributes :name, :description, :directions
+  set_type :park
+  attributes :name, :description, :directions, :image_url
 end
