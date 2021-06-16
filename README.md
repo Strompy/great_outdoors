@@ -87,7 +87,7 @@ Or run individual tests by including the file path at the end of the above comma
 
 ## Great Outdoors Endpoints
 
-* [Search for a park](#get-a-park-for-a-specific-location)
+<!-- * [Search for a park](#get-a-park-for-a-specific-location) -->
 <!-- * [Get all parks](#get-all-parks) -->
 
 
