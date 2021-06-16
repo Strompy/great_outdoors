@@ -2,8 +2,12 @@ class ImageService
   def self.get_by_name(name)
   response = get_json(name)
   parsed = JSON.parse(response.body, symbolize_names: true)
-  num = rand(0..parsed[:hits].size-1)
-  parsed[:hits][num][:largeImageURL]
+  if parsed[:total] == 0
+    'https://www.nps.gov/aboutus/news/images/JOTR_NPSBradSutton_960w.jpg'
+  else
+    num = rand(0..parsed[:hits].size-1)
+    parsed[:hits][num][:largeImageURL]
+  end
 end
 
 private
