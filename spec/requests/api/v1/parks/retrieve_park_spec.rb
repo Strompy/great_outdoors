@@ -45,6 +45,18 @@ RSpec.describe 'Get Park by Search Endpoint' do
     expect(Search.count).to eq(1)
     expect(Park.count).to eq(1)
   end
+  it 'returns an image for the park' do
+    location = 'denver,co'
+
+    get "/api/v1/parks?location=#{location}"
+
+    expect(response).to be_successful
+
+    data = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
+
+    expect(data).to have_key(:image_url)
+    expect(data[:image_url]).to_not be_empty
+  end
   # parks endpoint returns all previous searches
   # parks/:id returns individual previous search
 end
