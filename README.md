@@ -3,7 +3,7 @@
 
 The Great Outdoors is an API built to help you plan your next trip to one of America's national parks. Search for the park nearest to your town or destination city and get back the closest park with some handy information about the park, directions, and an image to give you a preview of what you will experience!
 
-This API was built as a tech challenge. It consumes the [National Park Service](https://www.nps.gov/subjects/developer/api-documentation.htm#/) and [Pixabay](https://pixabay.com/api/docs/) APIs to return JSON API 1.0 compliant data. You can test endpoints locally by following the instructions [here](#getting-started).
+This API was built as a tech challenge. It consumes the [National Park Service](https://www.nps.gov/subjects/developer/api-documentation.htm#/) and [Pixabay](https://pixabay.com/api/docs/) APIs to return JSON API 1.0 compliant data. You can test endpoints locally by following the instructions [here](#getting-started) or visiting the deployed Heroku app [here](https://limitless-bayou-95524.herokuapp.com/api/v1/parks).
 
 ## Table of Contents
 
