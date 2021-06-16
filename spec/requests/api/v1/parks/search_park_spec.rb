@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Get Park by Search Endpoint' do
+RSpec.describe 'Search Park by parks  Endpoint' do
   it 'can receive a location and return park data' do
     location = 'denver,co'
     get "/api/v1/parks?location=#{location}"
