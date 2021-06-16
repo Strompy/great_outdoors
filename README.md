@@ -87,10 +87,54 @@ Or run individual tests by including the file path at the end of the above comma
 
 ## Great Outdoors Endpoints
 
-<!-- * [Search for a park](#get-a-park-for-a-specific-location) -->
-<!-- * [Get all parks](#get-all-parks) -->
+* [Get all parks](#get-all-previously-searched-parks)
+* [Search for a park](#get-a-park-for-a-specific-location)
 
+#### Get all previously searched parks:
 
+```
+GET /api/v1/parks
+```
+
+Example response:
+
+```
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "park",
+      "attributes": {
+        "name": "Rocky Mountain National Park",
+        "description": "Rocky Mountain National Park’s 415 square miles encompass and protect spectacular mountain environments. Enjoy Trail Ridge Road – which crests at over 12,000 feet including many overlooks to experience the subalpine and alpine worlds – along with over 300 miles of hiking trails, wildflowers, wildlife, starry nights, and fun times. In a world of superlatives, Rocky is on top!",
+        "directions": "Driving from the east: from I-25, take US Hwy 34 or 36. Driving from the west: from I-70, take US Hwy 40 to Granby to US Hwy 34 to Grand Lake. From mid-October until late May, Trail Ridge Road between Estes Park and Grand Lake is closed to vehicles, so driving between the two takes ~4 hours. The closest airport is Denver International (DIA). There is no public transportation between nearby cities and the park.",
+        "image_url": "https://pixabay.com/get/g6f48903e89e1856691ff6a6eaadee0467b7dc72f889a5afc47c1858088ff5be3e3c63326d52708db810c18e35cb95d473011dd389a6f8cd3414060b9722772f0_1280.jpg"
+      }
+    },
+    {
+      "id": "2",
+      "type": "park",
+      "attributes": {
+        "name": "Klondike Gold Rush - Seattle Unit National Historical Park",
+        "description": "Seattle flourished during and after the Klondike Gold Rush. Merchants supplied people from around the world passing through this port city on their way to a remarkable adventure in Alaska. Today, the park is your gateway to learn about the Klondike Gold Rush, explore the area's public lands, and engage with the local community.",
+        "directions": "The park and visitor center are located on the northwest corner of 2nd Ave South and South Jackson Street in the former Cadillac Hotel. The Pioneer Square neighborhood is serviced by several public transportation options. Visit your directions page for more information about parking.",
+        "image_url": "https://www.nps.gov/aboutus/news/images/JOTR_NPSBradSutton_960w.jpg"
+      }
+    },
+    {
+      "id": "3",
+      "type": "park",
+      "attributes": {
+        "name": "African American Civil War Memorial",
+        "description": "Over 200,000 African-American soldiers and sailors served in the U.S. Army and Navy during the Civil War. Their service helped to end the war and free over four million slaves. The African American Civil War Memorial honors their service and sacrifice.",
+        "directions": "The memorial is located at the corner of Vermont Avenue, 10th St, and U Street NW, near the U Street/African-American Civil War Memorial/Cardozo Metro Station.",
+        "image_url": "https://www.nps.gov/aboutus/news/images/JOTR_NPSBradSutton_960w.jpg"
+      }
+    }
+  ]
+}
+
+```
 
 #### Get a park for a specific location:
 
