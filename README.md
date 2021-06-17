@@ -5,7 +5,7 @@ The Great Outdoors is an API built to help you plan your next trip to one of Ame
 
 This API was built as a tech challenge. It consumes the [National Park Service](https://www.nps.gov/subjects/developer/api-documentation.htm#/) and [Pixabay](https://pixabay.com/api/docs/) APIs to return JSON API 1.0 compliant data. You can test endpoints locally by following the instructions [here](#getting-started) or visiting the deployed Heroku app [here](https://limitless-bayou-95524.herokuapp.com/api/v1/parks).
 
-Next steps: I'd like to add some more info to the results, namely weather info. Using the lat and long from the park data to find localized weather forecasts. Since that data would get stale as time moves forward, I would need to add some functionality to expire the old weather data and get updated weather data. 
+Next steps: I'd like to add some more info to the results, namely weather info. Using the lat and long from the park data to find localized weather forecasts. Since that data would get stale as time moves forward, I would need to add some functionality to expire the old weather data and get updated weather data. Additionally, I could add more filtering capability, like searching for description or state. Finally, I would like make the error handling messages more helpful to guide the user to solutions.
 
 ## Table of Contents
 
