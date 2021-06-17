@@ -8,7 +8,7 @@ RSpec.describe 'Search Park by parks  Endpoint' do
     expect(response).to be_successful
     expect(response.content_type).to eq('application/json')
 
-    data = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
+    data = JSON.parse(response.body, symbolize_names: true)[:data][0][:attributes]
 
     expect(data).to have_key(:name)
     expect(data).to have_key(:description)
@@ -52,7 +52,7 @@ RSpec.describe 'Search Park by parks  Endpoint' do
 
     expect(response).to be_successful
 
-    data = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
+    data = JSON.parse(response.body, symbolize_names: true)[:data][0][:attributes]
 
     expect(data).to have_key(:image_url)
     expect(data[:image_url]).to_not be_empty
@@ -161,8 +161,17 @@ RSpec.describe 'Search Park by parks  Endpoint' do
 
     expect(response).to be_successful
     data = JSON.parse(response.body, symbolize_names: true)[:data]
-
+    expect(data.size).to eq(1)
     expect(data[0][:id].to_i).to eq(park1.id)
+  end
+  it 'returns sad path if nothing found' do
+    get "/api/v1/parks"
+
+    expect(response).to be_successful
+
+    data = JSON.parse(response.body, symbolize_names: true)
+
+    expect(data).to eq('No results found')
   end
   # parks/:id returns individual previous search
 end
