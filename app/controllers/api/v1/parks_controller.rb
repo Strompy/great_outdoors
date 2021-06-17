@@ -1,19 +1,16 @@
 class Api::V1::ParksController < ApplicationController
   def index
+    parks = Park.where(nil)
     if search_params[:location]
       parks = search_for_park(search_params[:location])
-    elsif search_params[:order] == 'desc'
-      parks = Park.order(created_at: :desc)
-    elsif search_params[:order] == 'alpha_asc'
-      parks = Park.order(:name)
-    elsif search_params[:order] == 'alpha_desc'
-      parks = Park.order(name: :desc)
-    else
-      parks = Park.all
+    elsif search_params[:order]
+      parks = parks.send("order_by_#{search_params[:order]}")
     end
+
     if search_params[:filter]
-      parks = parks.where("lower(name) LIKE ?", "%#{search_params[:filter].downcase}%")
+      parks = parks.filter_name(search_params[:filter])
     end
+
     if parks.empty?
       render json: 'No results found'.to_json
     else
