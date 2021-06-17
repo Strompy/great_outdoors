@@ -31,6 +31,7 @@ class Api::V1::ParksController < ApplicationController
       park = search.parks.first
     else
       park = ParkFacade.by_location(location)
+      return [] if park.nil?
       park.searches << Search.create(location: location)
     end
     [park]

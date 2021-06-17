@@ -2,6 +2,7 @@ class ParkFacade
   def self.by_location(location)
     city, state = location.split(',')
     park_data = ParkService.get_park(city, state)
+    return park_data if park_data.nil?
     image = ImageService.get_by_name(park_data[:fullName])
     park = Park.create(
       name: park_data[:fullName],
