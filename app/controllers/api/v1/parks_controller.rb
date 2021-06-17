@@ -1,18 +1,27 @@
 class Api::V1::ParksController < ApplicationController
   def index
-    if search_params[:location].nil?
-      parks = Park.all
-      render json: ParkSerializer.new(parks).serialized_json
+    parks = Park.where(nil)
+    if search_params[:location]
+      parks = search_for_park(search_params[:location])
+    elsif search_params[:order]
+      parks = parks.send("order_by_#{search_params[:order]}")
+    end
+
+    if search_params[:filter]
+      parks = parks.filter_name(search_params[:filter])
+    end
+
+    if parks.empty?
+      render json: 'No results found'.to_json
     else
-      park = search_for_park(search_params[:location])
-      render json: ParkSerializer.new(park).serialized_json
+      render json: ParkSerializer.new(parks).serialized_json
     end
   end
 
   private
 
   def search_params
-    params.permit(:location)
+    params.permit(:location, :order, :filter)
   end
 
   def search_for_park(search_location)
@@ -24,6 +33,6 @@ class Api::V1::ParksController < ApplicationController
       park = ParkFacade.by_location(location)
       park.searches << Search.create(location: location)
     end
-    park
+    [park]
   end
 end

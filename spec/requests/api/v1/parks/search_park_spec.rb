@@ -8,7 +8,7 @@ RSpec.describe 'Search Park by parks  Endpoint' do
     expect(response).to be_successful
     expect(response.content_type).to eq('application/json')
 
-    data = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
+    data = JSON.parse(response.body, symbolize_names: true)[:data][0][:attributes]
 
     expect(data).to have_key(:name)
     expect(data).to have_key(:description)
@@ -52,11 +52,126 @@ RSpec.describe 'Search Park by parks  Endpoint' do
 
     expect(response).to be_successful
 
-    data = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
+    data = JSON.parse(response.body, symbolize_names: true)[:data][0][:attributes]
 
     expect(data).to have_key(:image_url)
     expect(data[:image_url]).to_not be_empty
   end
-  # parks endpoint returns all previous searches
+  it 'can reverse order search results' do
+    park1 = Park.create(
+      name: "Rocky Mountain National Park",
+      description: "Rocky Mountain National Park’s 415 square miles encompass and protect spectacular mountain environments.",
+      directions: "Driving from the east: from I-25, take US Hwy 34 or 36.",
+      image_url: "image.com"
+    )
+    park2 = Park.create(
+      name: "African American Civil War Memorial",
+      description: "Over 200,000 African-American soldiers and sailors served in the U.S. Army",
+      directions: "The memorial is located at the corner of Vermont Avenue",
+      image_url: "image.com"
+    )
+    park3 = Park.create(
+      name: "Klondike Gold Rush - Seattle Unit National Historical Park",
+      description: "Seattle flourished during and after the Klondike Gold Rush",
+      directions: "The park and visitor center are located on the northwest corner of 2nd Ave South",
+      image_url: "image.com"
+    )
+    park1.searches << Search.create(location: 'denver,co')
+    park2.searches << Search.create(location: 'washington,dc')
+    park3.searches << Search.create(location: 'seattle,wa')
+
+
+    get "/api/v1/parks?order=desc"
+
+    expect(response).to be_successful
+    data = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(data[0][:id].to_i).to eq(park3.id)
+    expect(data[1][:id].to_i).to eq(park2.id)
+    expect(data[2][:id].to_i).to eq(park1.id)
+  end
+  it 'can order search results by name' do
+    park1 = Park.create(
+      name: "Rocky Mountain National Park",
+      description: "Rocky Mountain National Park’s 415 square miles encompass and protect spectacular mountain environments.",
+      directions: "Driving from the east: from I-25, take US Hwy 34 or 36.",
+      image_url: "image.com"
+    )
+    park2 = Park.create(
+      name: "African American Civil War Memorial",
+      description: "Over 200,000 African-American soldiers and sailors served in the U.S. Army",
+      directions: "The memorial is located at the corner of Vermont Avenue",
+      image_url: "image.com"
+    )
+    park3 = Park.create(
+      name: "Klondike Gold Rush - Seattle Unit National Historical Park",
+      description: "Seattle flourished during and after the Klondike Gold Rush",
+      directions: "The park and visitor center are located on the northwest corner of 2nd Ave South",
+      image_url: "image.com"
+    )
+    park1.searches << Search.create(location: 'denver,co')
+    park2.searches << Search.create(location: 'washington,dc')
+    park3.searches << Search.create(location: 'seattle,wa')
+
+
+    get "/api/v1/parks?order=alpha_asc"
+
+    expect(response).to be_successful
+    data = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(data[0][:id].to_i).to eq(park2.id)
+    expect(data[1][:id].to_i).to eq(park3.id)
+    expect(data[2][:id].to_i).to eq(park1.id)
+
+    get "/api/v1/parks?order=alpha_desc"
+
+    expect(response).to be_successful
+    data = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(data[0][:id].to_i).to eq(park1.id)
+    expect(data[1][:id].to_i).to eq(park3.id)
+    expect(data[2][:id].to_i).to eq(park2.id)
+  end
+  it 'can filter parks by name' do
+    park1 = Park.create(
+      name: "Rocky Mountain National Park",
+      description: "Rocky Mountain National Park’s 415 square miles encompass and protect spectacular mountain environments.",
+      directions: "Driving from the east: from I-25, take US Hwy 34 or 36.",
+      image_url: "image.com"
+    )
+    park2 = Park.create(
+      name: "African American Civil War Memorial",
+      description: "Over 200,000 African-American soldiers and sailors served in the U.S. Army",
+      directions: "The memorial is located at the corner of Vermont Avenue",
+      image_url: "image.com"
+    )
+    park3 = Park.create(
+      name: "Klondike Gold Rush - Seattle Unit National Historical Park",
+      description: "Seattle flourished during and after the Klondike Gold Rush",
+      directions: "The park and visitor center are located on the northwest corner of 2nd Ave South",
+      image_url: "image.com"
+    )
+    park1.searches << Search.create(location: 'denver,co')
+    park2.searches << Search.create(location: 'washington,dc')
+    park3.searches << Search.create(location: 'seattle,wa')
+
+    filter = 'rocky'
+
+    get "/api/v1/parks?filter=#{filter}"
+
+    expect(response).to be_successful
+    data = JSON.parse(response.body, symbolize_names: true)[:data]
+    expect(data.size).to eq(1)
+    expect(data[0][:id].to_i).to eq(park1.id)
+  end
+  it 'returns sad path if nothing found' do
+    get "/api/v1/parks"
+
+    expect(response).to be_successful
+
+    data = JSON.parse(response.body, symbolize_names: true)
+
+    expect(data).to eq('No results found')
+  end
   # parks/:id returns individual previous search
 end
