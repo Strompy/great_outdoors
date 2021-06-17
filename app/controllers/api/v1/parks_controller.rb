@@ -1,18 +1,21 @@
 class Api::V1::ParksController < ApplicationController
   def index
-    if search_params[:location].nil?
-      parks = Park.all
-      render json: ParkSerializer.new(parks).serialized_json
-    else
+    if search_params[:location]
       park = search_for_park(search_params[:location])
       render json: ParkSerializer.new(park).serialized_json
+    elsif search_params[:order] == 'desc'
+      parks = Park.order(created_at: :desc)
+      render json: ParkSerializer.new(parks).serialized_json
+    else
+      parks = Park.all
+      render json: ParkSerializer.new(parks).serialized_json
     end
   end
 
   private
 
   def search_params
-    params.permit(:location)
+    params.permit(:location, :order)
   end
 
   def search_for_park(search_location)
