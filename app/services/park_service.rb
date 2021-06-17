@@ -1,10 +1,12 @@
 class ParkService
   def self.get_park(city, state)
     response = get_json(city, state)
-    if response.status == 200
-      JSON.parse(response.body, symbolize_names: true)[:data].first
+    res = JSON.parse(response.body, symbolize_names: true)
+    if !res[:total].nil? && res[:total].to_i > 0
+      res[:data].first
+    else
+      nil
     end
-    # add else for bad request
   end
 
   private
