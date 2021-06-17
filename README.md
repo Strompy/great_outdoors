@@ -98,6 +98,13 @@ Or run individual tests by including the file path at the end of the above comma
 GET /api/v1/parks
 ```
 
+Also include optional query parameters: 
+
+`?order=asc` - Sorts by created_at in ascending order
+`?order=alpha-desc`  Sorts by park name in descending order
+`?order=alpha-asc` Sorts by park name in ascending order
+`?filter=<name>` filters results by name or name fragment
+
 Example response:
 
 ```
