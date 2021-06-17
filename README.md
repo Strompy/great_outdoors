@@ -106,10 +106,10 @@ GET /api/v1/parks
 
 Optional query parameters available: 
 
-* `?order=asc` - Sorts by created_at in ascending order
-* `?order=alpha-desc`  Sorts by park name in descending order
-* `?order=alpha-asc` Sorts by park name in ascending order
-* `?filter=<name>` filters results by name or name fragment
+* `?order=asc` – Sorts by created_at in ascending order
+* `?order=alpha-desc` – Sorts by park name in descending order
+* `?order=alpha-asc` – Sorts by park name in ascending order
+* `?filter=<name>` – filters results by name or name fragment
 
 Example response:
 
