@@ -123,14 +123,14 @@ RSpec.describe 'Search Park by parks  Endpoint' do
     expect(data[1][:id].to_i).to eq(park3.id)
     expect(data[2][:id].to_i).to eq(park1.id)
 
-    # get "/api/v1/parks?order=alpha_desc"
-    #
-    # expect(response).to be_successful
-    # data = JSON.parse(response.body, symbolize_names: true)[:data]
-    #
-    # expect(data[0][:id].to_i).to eq(park1.id)
-    # expect(data[1][:id].to_i).to eq(park3.id)
-    # expect(data[2][:id].to_i).to eq(park2.id)
+    get "/api/v1/parks?order=alpha_desc"
+
+    expect(response).to be_successful
+    data = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(data[0][:id].to_i).to eq(park1.id)
+    expect(data[1][:id].to_i).to eq(park3.id)
+    expect(data[2][:id].to_i).to eq(park2.id)
   end
   # parks/:id returns individual previous search
 end
