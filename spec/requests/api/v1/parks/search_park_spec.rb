@@ -32,6 +32,21 @@ RSpec.describe 'Search Park by parks  Endpoint' do
     expect(search.location).to eq(location)
     expect(search.parks).to_not be_empty
   end
+  it 'handles searches with no results' do
+    location = 'portland,or'
+    expect(Search.count).to eq(0)
+    expect(Park.count).to eq(0)
+
+    get "/api/v1/parks?location=#{location}"
+    expect(response).to be_successful
+
+    expect(Search.count).to eq(0)
+    expect(Park.count).to eq(0)
+
+    data = JSON.parse(response.body, symbolize_names: true)
+
+    expect(data).to eq('No results found')
+  end
   it 'uses the previous search for a non-unique location' do
     location = 'denver,co'
     get "/api/v1/parks?location=#{location}"
